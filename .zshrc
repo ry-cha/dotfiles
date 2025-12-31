@@ -66,6 +66,7 @@ function y() {
 if [[ "$OS_TYPE" == "Linux" ]]; then
     alias subaru='bash ~/subaru.sh'
     alias honda='bash ~/honda.sh'
+    alias rice='bash ~/rice.sh'
 fi
 
 # macOS aliases

@@ -28,8 +28,13 @@ exec --no-startup-id dex --autostart --environment i3
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-# exec --no-startup-id xset s 300 
-# exec --no-startup-id xset dpms 0 0 0
+# lock 
+
+exec --no-startup-id xset s 300
+exec --no-startup-id xset s noblank
+# screen off
+exec --no-startup-id xset dpms 700 700 700
+
 exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.config/i3/lock.sh
 bindsym $mod+e exec ~/.config/i3/lock.sh
 bindsym $mod+p exec ~/.config/i3blocks/shutdown_menu
@@ -210,8 +215,8 @@ workspace 2 gaps horizontal 125
 workspace 2 gaps vertical 50 
 workspace 2 gaps inner 10 
 
-workspace 5 gaps horizontal 150
-workspace 5 gaps vertical 50
-workspace 5 gaps inner 10
+workspace 5 gaps horizontal 50
+workspace 5 gaps vertical 20
+workspace 5 gaps inner 5 
 
 exec_always --no-startup-id feh --bg-center ~/Wallpapers/gdsti.png
