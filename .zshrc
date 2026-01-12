@@ -64,8 +64,6 @@ function y() {
 
 # linux aliases
 if [[ "$OS_TYPE" == "Linux" ]]; then
-    alias subaru='bash ~/subaru.sh'
-    alias honda='bash ~/honda.sh'
     alias rice='bash ~/rice.sh'
 fi
 
@@ -84,8 +82,4 @@ has_terminfo() {
 ORIG_TERM="$TERM"
 if ! has_terminfo "$TERM"; then # downgrade
     export TERM="xterm-256color"
-fi
-
-if [[ -o login ]]; then
-    [[ -f /etc/motd ]] && cat /etc/motd
 fi

@@ -100,9 +100,7 @@ typeset -A menu
 menu=(
   [Shutdown]="systemctl poweroff"
   [Reboot]="systemctl reboot"
-  [Hibernate]="systemctl hibernate"
   [Suspend]="systemctl suspend"
-  [Halt]="systemctl halt"
   [Lock]="${LOCKSCRIPT:-exec ~/.config/i3/lock.sh}"
   [Logout]="i3-msg exit"
   [Cancel]=""
