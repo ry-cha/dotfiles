@@ -1,6 +1,3 @@
--- vim.keymap.set('n', '<leader>w', ':w<CR>', { noremap = true, silent = true })
--- vim.keymap.set("n", "<leader>q", ":bdelete<CR>", { noremap = true, silent = true })
-
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
 
