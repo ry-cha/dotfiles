@@ -23,3 +23,11 @@ palette = 1=#C53030
 palette = 2=#A84848
 palette = 3=#7A2E2E
 palette = 4=#949494
+
+window-step-resize = true
+# font-thicken
+macos-icon = custom-style
+macos-icon-ghost-color = DF6464
+macos-icon-screen-color = CC0A00
+macos-icon-frame = chrome 
+

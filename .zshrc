@@ -24,24 +24,13 @@ setopt hist_verify
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
 
-OS_TYPE=$(uname)
-case "$OS_TYPE" in
-    Linux)
-        # ubuntu
-        ZSH_AUTOSUGGESTIONS=/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-        ZSH_SYNTAX_HIGHLIGHTING=/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-        FZF_INIT="[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh"
-        PATH="$HOME/.local/kitty.app/bin:$PATH"
-        ;;
-    Darwin)
-        # macOS
-        ZSH_AUTOSUGGESTIONS=/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-        ZSH_SYNTAX_HIGHLIGHTING=/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-        FZF_INIT="source <(fzf --zsh)"
-        PATH="$PATH:$(go env GOPATH)/bin"
-        export JAVA_HOME=`/usr/libexec/java_home -v 21.0.2`
-        ;;
-esac
+ZSH_AUTOSUGGESTIONS=/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+ZSH_SYNTAX_HIGHLIGHTING=/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+FZF_INIT="source <(fzf --zsh)"
+PATH="$PATH:$(go env GOPATH)/bin"
+# export JAVA_HOME=`/usr/libexec/java_home -v 21.0.2`
+export JAVA_HOME=$(/usr/libexec/java_home -v 25)
+# export PATH="$JAVA_HOME/bin:$PATH"
 
 [[ -f $ZSH_AUTOSUGGESTIONS ]] && source $ZSH_AUTOSUGGESTIONS
 [[ -f $ZSH_SYNTAX_HIGHLIGHTING ]] && source $ZSH_SYNTAX_HIGHLIGHTING
@@ -62,24 +51,6 @@ function y() {
     rm -f -- "$tmp"
 }
 
-# linux aliases
-if [[ "$OS_TYPE" == "Linux" ]]; then
-    alias rice='bash ~/rice.sh'
-fi
-
-# macOS aliases
-if [[ "$OS_TYPE" == "Darwin" ]]; then
-    alias ghidra='/opt/homebrew/Caskroom/ghidra/11.3-20250205/ghidra_11.3_PUBLIC/ghidraRun'
-    alias zookeeper='zookeeper-server-start /opt/homebrew/etc/zookeeper/zoo.cfg'
-    alias kafka='kafka-server-start /opt/homebrew/etc/kafka/server.properties'
-fi
-
-# terminal setting ghostty/kitty -> xterm-256color
-has_terminfo() {
-    # returns 0 if terminal type is installed
-    infocmp "$1" >/dev/null 2>&1
-}
-ORIG_TERM="$TERM"
-if ! has_terminfo "$TERM"; then # downgrade
-    export TERM="xterm-256color"
-fi
+alias ghidra='/opt/homebrew/Caskroom/ghidra/11.3-20250205/ghidra_11.3_PUBLIC/ghidraRun'
+alias zookeeper='zookeeper-server-start /opt/homebrew/etc/zookeeper/zoo.cfg'
+alias kafka='kafka-server-start /opt/homebrew/etc/kafka/server.properties'
