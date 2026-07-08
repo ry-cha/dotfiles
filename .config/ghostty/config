@@ -1,13 +1,13 @@
 # background = 212121 
 background = 000000 
 
-font-size = 23 
+font-size = 20 
 font-family = "IosevkaTerm Nerd Font"
 font-feature = -calt
 font-feature = -dlig
 
 maximize = true
-window-decoration = false
+# window-decoration = false
 window-padding-x = 8
 window-padding-y = 8
 

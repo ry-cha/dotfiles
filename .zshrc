@@ -54,3 +54,15 @@ function y() {
 alias ghidra='/opt/homebrew/Caskroom/ghidra/11.3-20250205/ghidra_11.3_PUBLIC/ghidraRun'
 alias zookeeper='zookeeper-server-start /opt/homebrew/etc/zookeeper/zoo.cfg'
 alias kafka='kafka-server-start /opt/homebrew/etc/kafka/server.properties'
+export PATH="/opt/homebrew/opt/postgresql@18/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/Users/ryanchan/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
