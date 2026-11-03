@@ -1,5 +1,4 @@
-# background = 212121 
-background = 000000 
+theme = light:GitHub Light Default,dark:GitHub Dark Near Black
 
 font-size = 20 
 font-family = "IosevkaTerm Nerd Font"
@@ -16,13 +15,6 @@ confirm-close-surface = false
 mouse-hide-while-typing = true
 
 custom-shader = shaders/cursor_smear.glsl
-
-palette = 1=#C53030
-# palette = 2=#4A8B8B
-# palette = 3=#3A6E6E
-palette = 2=#A84848
-palette = 3=#7A2E2E
-palette = 4=#949494
 
 window-step-resize = true
 # font-thicken
