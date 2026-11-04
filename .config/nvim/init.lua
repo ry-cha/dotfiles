@@ -18,6 +18,7 @@ vim.g.mapleader = " "
 vim.o.number = true
 vim.o.signcolumn = "yes"
 vim.o.wrap = true
+vim.o.termguicolors = true
 
 vim.o.expandtab = true
 vim.o.tabstop = 4
@@ -48,14 +49,40 @@ require("lazy").setup({
         config = true
     },
     {
-        "ficcdaf/ashen.nvim",
+        "projekt0n/github-nvim-theme",
+        name = "github-theme",
         lazy = false,
         priority = 1000,
         config = function()
-            vim.cmd("colorscheme ashen")
-            vim.api.nvim_set_hl(0, "Normal", { bg = "#000000"})
-            vim.api.nvim_set_hl(0, "LineNr", { bg = "#000000", fg = "#747474"})
-            vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#DF6464"})
+            local function sync_system_theme()
+                local is_dark
+                if vim.fn.has("macunix") == 1 then
+                    local style = vim.fn.system({ "/usr/bin/defaults", "read", "-g", "AppleInterfaceStyle" })
+                    is_dark = vim.v.shell_error == 0 and vim.trim(style) == "Dark"
+                else
+                    is_dark = vim.o.background == "dark"
+                end
+
+                local theme = is_dark and "github_dark_default" or "github_light_default"
+                if vim.g.colors_name ~= theme then
+                    vim.cmd.colorscheme(theme)
+                end
+            end
+
+            sync_system_theme()
+            vim.api.nvim_create_autocmd("FocusGained", { callback = sync_system_theme })
+
+            local timer = vim.uv.new_timer()
+            if timer then
+                timer:start(10000, 10000, vim.schedule_wrap(sync_system_theme))
+                vim.api.nvim_create_autocmd("VimLeavePre", {
+                    once = true,
+                    callback = function()
+                        timer:stop()
+                        timer:close()
+                    end,
+                })
+            end
         end
     },
     {

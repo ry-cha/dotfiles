@@ -60,12 +60,12 @@ float ease(float x) {
     return pow(1.0 - x, 3.0);
 }
 
-const vec4 TRAIL_COLOR = vec4(1., 1., 1., 1.0);
 const float OPACITY = 0.6;
 const float DURATION = 0.3; //IN SECONDS
 
 void mainImage(out vec4 fragColor, in vec2 fragCoord)
 {
+    vec4 trailColor = vec4(iCursorColor, 1.0);
 
     #if !defined(WEB)
     fragColor = texture(iChannel0, fragCoord.xy / iResolution.xy);
@@ -102,9 +102,9 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
 
     vec4 newColor = vec4(fragColor);
     // Draw trail
-    newColor = mix(newColor, TRAIL_COLOR, antialising(sdfTrail));
+    newColor = mix(newColor, trailColor, antialising(sdfTrail));
     // Draw current cursor
-    newColor = mix(newColor, TRAIL_COLOR, antialising(sdfCurrentCursor));
+    newColor = mix(newColor, trailColor, antialising(sdfCurrentCursor));
     newColor = mix(newColor, fragColor, step(sdfCurrentCursor, 0.));
     // newColor = mix(fragColor, newColor, OPACITY);
     fragColor = mix(fragColor, newColor, step(sdfCurrentCursor, easedProgress * lineLength));

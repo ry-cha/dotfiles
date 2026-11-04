@@ -7,10 +7,20 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(git)
 
-source $ZSH/oh-my-zsh.sh
+if [[ -t 0 ]]; then
+  if [[ -r "$ZSH/oh-my-zsh.sh" ]]; then
+    source "$ZSH/oh-my-zsh.sh"
+  else
+    # Oh My Zsh normally initializes Tab completion.
+    autoload -Uz compinit && compinit
+    if [[ -r "$HOME/powerlevel10k/powerlevel10k.zsh-theme" ]]; then
+      source "$HOME/powerlevel10k/powerlevel10k.zsh-theme"
+    fi
+  fi
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+  # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+  [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+fi
 
 # history setup
 HISTFILE=$HOME/.zhistory
@@ -24,20 +34,22 @@ setopt hist_verify
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
 
-ZSH_AUTOSUGGESTIONS=/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-ZSH_SYNTAX_HIGHLIGHTING=/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-FZF_INIT="source <(fzf --zsh)"
-PATH="$PATH:$(go env GOPATH)/bin"
+if (( $+commands[go] )); then
+  PATH="$PATH:$(go env GOPATH)/bin"
+fi
 # export JAVA_HOME=`/usr/libexec/java_home -v 21.0.2`
-export JAVA_HOME=$(/usr/libexec/java_home -v 25)
+if java_home=$(/usr/libexec/java_home -v 25 2>/dev/null); then
+  export JAVA_HOME="$java_home"
+fi
 # export PATH="$JAVA_HOME/bin:$PATH"
 
-[[ -f $ZSH_AUTOSUGGESTIONS ]] && source $ZSH_AUTOSUGGESTIONS
-[[ -f $ZSH_SYNTAX_HIGHLIGHTING ]] && source $ZSH_SYNTAX_HIGHLIGHTING
-eval "$(zoxide init zsh)"
-eval $FZF_INIT
-
-alias cd="z"
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init zsh)"
+  alias cd="z"
+fi
+if [[ -t 0 ]] && (( $+commands[fzf] )); then
+  source <(fzf --zsh)
+fi
 
 export EDITOR="nvim"
 export MANPAGER="nvim +Man!"
@@ -66,3 +78,15 @@ esac
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+export PATH="$HOME/.local/bin:$PATH"
+export MAHORUNNER_ROOT="$HOME/Developer"
+export MAHORUNNER_PROVIDER="codex"
+
+if [[ -o interactive && -t 0 ]]; then
+  ZSH_AUTOSUGGESTIONS=${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  ZSH_SYNTAX_HIGHLIGHTING=${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  [[ -r $ZSH_AUTOSUGGESTIONS ]] && source "$ZSH_AUTOSUGGESTIONS"
+  # Load highlighting after plugins that register line-editor widgets, including fzf.
+  [[ -r $ZSH_SYNTAX_HIGHLIGHTING ]] && source "$ZSH_SYNTAX_HIGHLIGHTING"
+fi
