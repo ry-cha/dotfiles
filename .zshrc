@@ -80,8 +80,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 export PATH="$HOME/.local/bin:$PATH"
-export MAHORUNNER_ROOT="$HOME/Developer"
-export MAHORUNNER_PROVIDER="codex"
+export MAHOSTACK_ROOT="$HOME/Developer"
+export MAHOSTACK_PROVIDER="codex"
 
 if [[ -o interactive && -t 0 ]]; then
   ZSH_AUTOSUGGESTIONS=${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
