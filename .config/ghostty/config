@@ -18,8 +18,8 @@ custom-shader = shaders/cursor_smear.glsl
 
 window-step-resize = true
 # font-thicken
-macos-icon = custom-style
-macos-icon-ghost-color = DF6464
-macos-icon-screen-color = CC0A00
-macos-icon-frame = chrome 
+# macos-icon = custom-style
+# macos-icon-ghost-color = DF6464
+# macos-icon-screen-color = CC0A00
+# macos-icon-frame = chrome 
 
